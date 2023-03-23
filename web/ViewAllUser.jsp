@@ -294,8 +294,9 @@
                                                     </td>
                                                     <td>${user.getStatus()}</td>
                                         <form action="MainController" method="post">
+                                            <input type="hidden" name="id" value="${ID}"/>
                                             <input type="hidden" name="status" value="${user.getStatus()}"/>
-                                            <input type="hidden" name="viewUserType" value="${viewUserType}"/>
+                                            <input type="hidden" name="role" value="${viewUserType}"/>
                                             <input type="hidden" name="keyWord" value="${requestScope.keyWord}"/>
                                             <td><input class="btn btn-danger" type="submit" name="action" value="BAN/UNBAN"/></td>
                                         </form>

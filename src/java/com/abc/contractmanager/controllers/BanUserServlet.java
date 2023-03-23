@@ -36,8 +36,8 @@ public class BanUserServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int status = Integer.parseInt(request.getParameter("status"));
-            char viewUserType = (request.getParameter("viewUserType")).charAt(0);
-            switch (viewUserType) {
+            char role = (request.getParameter("role")).charAt(0);
+            switch (role) {
                 case ('O'):
                     int OID = Integer.parseInt(request.getParameter("id"));
                     if (status == 1) {
@@ -63,7 +63,8 @@ public class BanUserServlet extends HttpServlet {
                     }
                     break;
             }
-            request.setAttribute("role", viewUserType);
+            request.setAttribute("role", role);
+            int a= 0;
             request.getRequestDispatcher("SearchUserServlet").forward(request, response);
         }
     }
