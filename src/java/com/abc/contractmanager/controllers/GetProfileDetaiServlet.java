@@ -46,14 +46,25 @@ public class GetProfileDetaiServlet extends HttpServlet {
             switch (viewUserType) {
                 case ('O'):
                     OwnerDTO owner = OwnerDAO.getOwnerByOID(id);
+                    request.setAttribute("txtFullName", owner.getFullName());
+                    request.setAttribute("txtcid", owner.getCID());
+                    request.setAttribute("txtAddress", owner.getAddress());
+                    request.setAttribute("txtDob", owner.getDateOfBirth().toString());
                     request.setAttribute("account", owner);
                     break;
                 case ('A'):
                     AdminDTO admin = AdminDAO.getAdminDetail(id);
+                    request.setAttribute("txtFullName", admin.getFullName());
+                    request.setAttribute("txtcid", admin.getCID());
+                    request.setAttribute("txtAddress", admin.getAddress());
                     request.setAttribute("account", admin);
                     break;
                 default:
                     UserDTO user = UserDAO.getUserByUID(id);
+                    request.setAttribute("txtFullName", user.getFullName());
+                    request.setAttribute("txtcid", user.getCID());
+                    request.setAttribute("txtAddress", user.getAddress());
+                    request.setAttribute("txtDob", user.getDateOfBirth().toString());
                     request.setAttribute("account", user);
                     break;
             }

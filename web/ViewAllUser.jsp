@@ -67,12 +67,12 @@
 
                         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                             <img src="images/${sessionScope.user.getAvatar()}" alt="Profile" class="rounded-circle">
-                            <span class="d-none d-md-block dropdown-toggle ps-2">${sessionScope.admin.fullName}</span>
+                            <span class="d-none d-md-block dropdown-toggle ps-2">${sessionScope.user.getFullName()}</span>
                         </a><!-- End Profile Iamge Icon -->
 
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                             <li class="dropdown-header">
-                                <h6>${sessionScope.admin.fullName}</h6>
+                                <h6>${sessionScope.user.getFullName()}</h6>
 
                             </li>
                             <li>
@@ -194,7 +194,7 @@
             </div><!-- End Page Title -->
             <!------------------------------------------------------ Start Main ---------------------------------------------------->
             <c:set var="user" value="${sessionScope.user}"></c:set>
-            <c:set var="viewUserType" value="${requestScope.viewUserType}"></c:set>
+            <c:set var="role" value="${requestScope.role}"></c:set>
                 <section class="section dashboard">
                     <div class="row">
                         <div class="col-lg-12">
@@ -204,33 +204,36 @@
                                         <td><input type="text" class="form-control" id="floatingInput" placeholder="Search by name" name="keyWord" value="${param.keyWord}"/></td>
                                     <td> 
                                         <select class="form-select" type="hidden" name="role">
-                                            <c:if test="${(viewUserType == 'O')}">
+                                            <c:if test="${(role == 'O')}">
                                                 <option value="C">Customer</option>
                                                 <option value="R">Resident</option>
                                                 <option value="O" selected>Owner</option>
                                             </c:if>
-                                            <c:if test="${(viewUserType == 'C')}">
+                                            <c:if test="${(role == 'C')}">
                                                 <option value="C" selected>Customer</option>
                                                 <option value="R">Resident</option>
                                                 <option value="O">Owner</option>
                                             </c:if>
-                                            <c:if test="${(viewUserType == 'R')}">
+                                            <c:if test="${(role == 'R')}">
                                                 <option value="C">Customer</option>
                                                 <option value="R" selected>Resident</option>
                                                 <option value="O">Owner</option>
                                             </c:if>
-                                            <c:if test="${(viewUserType == null)}">
+                                            <c:if test="${(role == null)}">
                                                 <option value="C" selected>Customer</option>
                                                 <option value="R">Resident</option>
                                                 <option value="O">Owner</option>
                                             </c:if>
 
                                             <c:if test="${userType == 'B'}">
-                                                <c:if test="${(viewUserType == 'A')}">
+                                                <c:if test="${(role == 'A')}">
+                                                    <option value="C">Customer</option>
+                                                    <option value="R">Resident</option>
+                                                    <option value="O">Owner</option>
                                                     <option  value="A" selected>Admin</option>
                                                 </c:if>
-                                                <c:if test="${(viewUserType != 'A')}">
-                                                    <option  value="A">Admin</option>
+                                                <c:if test="${(role != 'A')}">
+                                                    <option value="A">Admin</option>
                                                 </c:if>
                                             </c:if>
                                         </select>
@@ -244,16 +247,16 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <c:if test="${(viewUserType == 'O')}">
+                                <c:if test="${(role == 'O')}">
                                     <h5 class="card-title">OWNER LIST ON SEVER</h5>
                                 </c:if>
-                                <c:if test="${(viewUserType == 'C')}">
+                                <c:if test="${(role == 'C')}">
                                     <h5 class="card-title">CUSTOMER LIST ON SEVER</h5>
                                 </c:if>
-                                <c:if test="${(viewUserType == 'R')}">
+                                <c:if test="${(role == 'R')}">
                                     <h5 class="card-title">RESIDENT LIST ON SEVER</h5>
                                 </c:if>
-                                <c:if test="${(viewUserType == 'A')}">
+                                <c:if test="${(role == 'A')}">
                                     <h5 class="card-title">ADMIN LIST ON SEVER</h5>
                                 </c:if>
 
@@ -273,13 +276,13 @@
                                     <tbody>
 
                                         <c:forEach var="user" varStatus="count" items="${requestScope.list}">
-                                            <c:if test="${(viewUserType == 'R') || (viewUserType == 'C')}">
+                                            <c:if test="${(role == 'R') || (role == 'C')}">
                                                 <c:set var="ID" value="${user.getUID()}"/>
                                             </c:if>
-                                            <c:if test="${viewUserType == 'O'}">
+                                            <c:if test="${role == 'O'}">
                                                 <c:set var="ID" value="${user.getOID()}"/>
                                             </c:if>
-                                            <c:if test="${viewUserType == 'A'}">
+                                            <c:if test="${role == 'A'}">
                                                 <c:set var="ID" value="${user.getAID()}"/>
                                             </c:if>
 
@@ -296,14 +299,14 @@
                                         <form action="MainController" method="post">
                                             <input type="hidden" name="id" value="${ID}"/>
                                             <input type="hidden" name="status" value="${user.getStatus()}"/>
-                                            <input type="hidden" name="role" value="${viewUserType}"/>
+                                            <input type="hidden" name="role" value="${role}"/>
                                             <input type="hidden" name="keyWord" value="${requestScope.keyWord}"/>
                                             <td><input class="btn btn-danger" type="submit" name="action" value="BAN/UNBAN"/></td>
                                         </form>
                                         <form action="MainController" method="post">
                                             <input type="hidden" name="keyWord" value="${requestScope.keyWord}"/>
                                             <input type="hidden" name="id" value="${ID}"/>
-                                            <input type="hidden" name="role" value="${viewUserType}"/>
+                                            <input type="hidden" name="role" value="${role}"/>
                                             <td><input class="btn btn-danger" type="submit" name="action" value="EDIT"/></td>
                                         </form>
                                         </tr>
@@ -315,53 +318,48 @@
                     </div>
                     <!-- End Table with stripped rows -->
                 </div>
-                <p>${requestScope.account.toString()}</p>
                 <c:set var="account" value="${requestScope.account}"/>
                 <form action="MainController" >
                     <div class="row mb-3">
                         <label for="fullName" class="col-md-4 col-lg-3 col-form-label">ID: </label>
                         <div class="col-md-8 col-lg-9">
-                            <input name="txtFullName" type="text" class="form-control" id="fullName" value="${requestScope.accountID}">
-                            <div style="color: red;">${requestScope.nameError}</div>
+                            ${requestScope.accountID}
                         </div> 
                     </div> 
                     <div class="row mb-3">
                         <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name: </label>
                         <div class="col-md-8 col-lg-9">
-                            <input name="txtFullName" type="text" class="form-control" id="fullName" value="${account.getFullName()}">
+                            <input name="txtFullName" type="text" class="form-control" id="fullName" value="${requestScope.txtFullName}">
                             <div style="color: red;">${requestScope.nameError}</div>
                         </div> 
                     </div> 
                     <div class="row mb-3">
                         <label for="txtcid" class="col-md-4 col-lg-3 col-form-label ">CID</label>
                         <div class="col-md-8 col-lg-9">
-                            <input name="txtcid" type="text" class="form-control" id="txtcid" value="${account.getCID()}">
+                            <input name="txtcid" type="text" class="form-control" id="txtcid" value="${requestScope.txtcid}">
                             <div style="color: red;">${requestScope.CIDError}</div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                         <div class="col-md-8 col-lg-9">
-                            <input name="txtAddress" type="text" class="form-control" id="Address" value="${account.getAddress()}">
+                            <input name="txtAddress" type="text" class="form-control" id="Address" value="${requestScope.txtAddress}">
                             <div style="color: red;">${requestScope.addressError}</div>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                        <div class="col-md-8 col-lg-9">
-                            <input name="txtPhone" type="text" class="form-control" id="Address" value="${account.getPhoneNumber()}">
-                            <div style="color: red;">${requestScope.phoneError}</div>
+                    <c:if test="${role != 'A'}">
+                        <div class="row mb-3">
+                            <label for="DateOfBirth" class="col-md-4 col-lg-3 col-form-label">Date Of Birth:</label>
+                            <div class="col-md-8 col-lg-9">
+                                <input name="txtDob" type="date" class="form-control" id="Address" value="${requestScope.txtDob}">
+                                <div style="color: red;">${requestScope.dobError}</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="DateOfBirth" class="col-md-4 col-lg-3 col-form-label">Date Of Birth:</label>
-                        <div class="col-md-8 col-lg-9">
-                            <input name="txtDob" type="date" class="form-control" id="Address" value="${account.getDateOfBirth()}">
-                            <div style="color: red;">${requestScope.dobError}</div>
-                        </div>
-                    </div>
-                    <input type="hidden" name="id" value="${ID}"/>
-                    <input type="hidden" name="viewUserType" value="${viewUserType}"/>
+                        ${requestScope.noti}
+                    </c:if>
+                    <input type="hidden" name="id" value="${requestScope.accountID}"/>
+                    <input type="hidden" name="role" value="${role}"/>
+                    <input type="hidden" name="keyWord" value="${requestScope.keyWord}"/>
                     <input type="hidden" name="action" value="SaveProfileForUser"/>
                     <div class="text-center">
                         <button type="submit" value="Save Profile" class="btn btn-primary">Save Changes</button>

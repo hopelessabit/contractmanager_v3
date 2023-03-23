@@ -48,7 +48,7 @@ public class SearchUserServlet extends HttpServlet {
             switch (role) {
                 case 'C':
                     ArrayList<UserDTO> customerList = UserDAO.getCustomerListByName(keyWord);
-                    request.setAttribute("viewUserType", "C");
+                    request.setAttribute("role", "C");
                     request.setAttribute("list", customerList);
                     break;
                 case 'R':
@@ -57,7 +57,7 @@ public class SearchUserServlet extends HttpServlet {
                         countContractList.add(ContractDAO.countContract('R', resident.getUID()));
                     }
                     request.setAttribute("countContract", countContractList);
-                    request.setAttribute("viewUserType", "R");
+                    request.setAttribute("role", "R");
                     request.setAttribute("list", residentList);
                     break;
                 case 'O':
@@ -66,13 +66,13 @@ public class SearchUserServlet extends HttpServlet {
                         countContractList.add(ContractDAO.countContract('O', owner.getOID()));
                     }
                     request.setAttribute("countContract", countContractList);
-                    request.setAttribute("viewUserType", "O");
+                    request.setAttribute("role", "O");
                     request.setAttribute("list", ownerList);
                     break;
                 case 'A':
                     ArrayList<AdminDTO> adminList = AdminDAO.getAdminListByName(keyWord);
                     request.setAttribute("list", adminList);
-                    request.setAttribute("viewUserType", "A");
+                    request.setAttribute("role", "A");
                     break;
             }
             

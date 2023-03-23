@@ -306,8 +306,6 @@
                                             <c:if test="${edit == 'true'}">
 
                                                 <form action="MainController">
-
-
                                                     <div class="row mb-3">
                                                         <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name: </label>
                                                         <div class="col-md-8 col-lg-9">
@@ -324,34 +322,6 @@
                                                             </div>
                                                         </div>
                                                     </c:if>
-                                                    <c:if test="${(profileType == 'O')}">   
-                                                        <div class="row mb-3">
-                                                            <label for="txtcid" class="col-md-4 col-lg-3 col-form-label">CID</label>
-                                                            <div class="col-md-8 col-lg-9">
-                                                                <input name="txtcid" type="text" class="form-control" id="txtcid" value="${requestScope.viewProfile.getOCID()}">
-                                                                <div style="color: red;">${requestScope.CIDError}</div>
-                                                            </div>
-                                                        </div>
-                                                    </c:if>
-                                                    <c:if test="${(profileType == 'R')}">   
-                                                        <div class="row mb-3">
-                                                            <label for="txtcid" class="col-md-4 col-lg-3 col-form-label">CID</label>
-                                                            <div class="col-md-8 col-lg-9">
-                                                                <input name="txtcid" type="text" class="form-control" id="txtcid" value="${requestScope.viewProfile.getRCID()}">
-                                                                <div style="color: red;">${requestScope.CIDError}</div>
-                                                            </div>
-                                                        </div>
-                                                    </c:if>
-                                                    <c:if test="${(profileType == 'S')}">   
-                                                        <div class="row mb-3">
-                                                            <label for="txtcid" class="col-md-4 col-lg-3 col-form-label">CID</label>
-                                                            <div class="col-md-8 col-lg-9">
-                                                                <input name="txtcid" type="text" class="form-control" id="txtcid" value="${requestScope.viewProfile.getSCID()}">
-                                                                <div style="color: red;">${requestScope.CIDError}</div>
-                                                            </div>
-                                                        </div>
-                                                    </c:if>
-
                                                     <div class="row mb-3">
                                                         <label for="txtDate" class="col-md-4 col-lg-3 col-form-label">DOB</label>
                                                         <div class="col-md-8 col-lg-9">
@@ -367,20 +337,10 @@
                                                             <div style="color: red;">${requestScope.addressError}</div>
                                                         </div>
                                                     </div>
-
-
-
-                                                  
-
-
-
                                                     <div class="text-center">
                                                         <button type="submit" name="action" value="Save Profile" class="btn btn-primary">Save Changes</button>
                                                     </div>
-
                                                 </form>
-
-
                                                 <!-- End Profile Edit Form -->
                                             </c:if>
 
